@@ -8,8 +8,7 @@ KILOBYTE = 1024
 MEGABYTE = 1024 * KILOBYTE
 REPORT_FREQ = 60
 
-def test_setup():
-    st = speedtest.Speedtest()
+def test_setup(st):
     st.get_servers()
     st.get_best_server()
     st.download()   # bits/s
@@ -27,9 +26,10 @@ def main():
     if len(sys.argv) and int(sys.argv[1]) >= 30:
         REPORT_FREQ = int(sys.argv[1])
 
+    st = speedtest.Speedtest()
     while True:
         time_now = datetime.now().strftime("%H:%M:%S")
-        download, upload, ping = test_setup()
+        download, upload, ping = test_setup(st)
         print(f"[{time_now}]: PING: {ping} ms\tDOWN: {download} Mbps\tUP: {upload} Mbps")
         time.sleep(REPORT_FREQ)
 
