@@ -1,4 +1,4 @@
-# Python SpeedTest Monitor
+# Python Internet Speed Monitor
 Monitor your internet download and upload speed via the Command Line with this Python Script!
 
 By default, the script reports every 60 seconds / 1 minute. To change its frequency, simply provide int argument when running the script:
