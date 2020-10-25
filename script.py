@@ -1,0 +1,39 @@
+import sys
+import time
+from datetime import datetime
+
+import speedtest
+
+KILOBYTE = 1024
+MEGABYTE = 1024 * KILOBYTE
+REPORT_FREQ = 60
+
+def test_setup():
+    st = speedtest.Speedtest()
+    st.get_servers()
+    st.get_best_server()
+    st.download()   # bits/s
+    st.upload()     # bits/s
+
+    res = st.results.dict()
+    download = "{:.2f}".format(res["download"] / MEGABYTE)
+    upload = "{:.2f}".format(res["upload"] / MEGABYTE)
+    ping = "{:.2f}".format(res["ping"])
+    return download, upload, ping
+
+
+def main():
+    # Check if command line argument for reporting freq is provided (min 30)
+    if len(sys.argv) and int(sys.argv[1]) >= 30:
+        REPORT_FREQ = int(sys.argv[1])
+
+    while True:
+        time_now = datetime.now().strftime("%H:%M:%S")
+        download, upload, ping = test_setup()
+        print(f"[{time_now}]: PING: {ping} ms\tDOWN: {download} Mbps\tUP: {upload} Mbps")
+        time.sleep(REPORT_FREQ)
+
+
+if __name__ == "__main__":
+    main()
+
