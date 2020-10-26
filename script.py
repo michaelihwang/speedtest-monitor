@@ -11,6 +11,7 @@ KILOBYTE = 1024
 MEGABYTE = 1024 * KILOBYTE
 REPORT_FREQ = 60
 
+
 def test_setup(st):
     st.get_servers()
     st.get_best_server()
@@ -27,9 +28,9 @@ def test_setup(st):
 @restartable
 def main():
     # Check if command line argument for reporting freq is provided (min 30)
-    if len(sys.argv) and int(sys.argv[1]) >= 30:
+    global REPORT_FREQ
+    if len(sys.argv) > 1 and int(sys.argv[1]) >= 30:
         REPORT_FREQ = int(sys.argv[1])
-
     try:
         st = speedtest.Speedtest()
         while True:
